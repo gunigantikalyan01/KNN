@@ -1,10 +1,5 @@
 # ❤️ Heart Disease Prediction Using K-Nearest Neighbors (KNN)
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
-![Machine Learning](https://img.shields.io/badge/Machine%20Learning-KNN-orange)
-![Scikit Learn](https://img.shields.io/badge/Scikit--Learn-1.6.1-orange?logo=scikitlearn)
-![Status](https://img.shields.io/badge/Project-Completed-success)
-
 ## 📌 Project Overview
 
 This project uses the **K-Nearest Neighbors (KNN) Algorithm**, a supervised machine learning classification algorithm, to predict the possibility of heart disease based on different health-related parameters.
@@ -104,7 +99,6 @@ The dataset contains the following 20 input features:
 - **Pandas** – Data manipulation and analysis.
 - **Scikit-learn** – Machine learning implementation.
 - **Pickle** – Saving and loading the trained model.
-- **Jupyter Notebook** – Model development and experimentation.
 
 ## 📁 Project Structure
 
@@ -118,70 +112,6 @@ Heart-Disease-Prediction/
 ├── README.md
 │
 └── requirements.txt
-```
-
-## ⚙️ Installation and Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/Heart-Disease-Prediction.git
-```
-
-### 2. Navigate to the Project Directory
-
-```bash
-cd Heart-Disease-Prediction
-```
-
-### 3. Create a Virtual Environment (Optional)
-
-```bash
-python -m venv venv
-```
-
-Activate the environment:
-
-**Windows:**
-```bash
-venv\Scripts\activate
-```
-
-**Linux / macOS:**
-```bash
-source venv/bin/activate
-```
-
-### 4. Install Required Libraries
-
-```bash
-pip install numpy pandas scikit-learn==1.6.1
-```
-
-The supplied model was serialized with Scikit-learn 1.6.1. Using the same version is recommended for compatibility.
-
-## 💻 Loading the Trained Model
-
-The trained KNN model is saved in the `KNN_model(1).pkl` file.
-
-Use the following Python code to load the model:
-
-```python
-import pickle
-
-# Load the trained KNN model
-with open("KNN_model(1).pkl", "rb") as file:
-    model = pickle.load(file)
-
-# Display model information
-print(model)
-
-# Display the expected input features
-print(model.feature_names_in_)
-
-# Display model configuration
-print("Number of Neighbors:", model.n_neighbors)
-print("Distance Metric:", model.metric)
 ```
 
 ## 🔍 Model Prediction
@@ -213,17 +143,13 @@ The trained model expects 20 numerical input features in the following order:
 ]
 ```
 
-**Important:** The CSV contains categorical values and missing data. The supplied model expects numerical input. The original encoding, missing-value handling, and any scaling steps are not included in the supplied files.
-
-Therefore, new inputs must undergo the exact same preprocessing used during model training before calling `model.predict()`.
-
 ## 📊 Model Information
 
 The supplied model is a trained `KNeighborsClassifier`.
 
 - Training samples stored in the model: 5,653.
 - Input features: 20.
-- Number of neighbors: 49.
+- Number of neighbors: 21.
 - Prediction classes: 0 and 1.
 
 **Note:** The supplied files do not include an evaluation report. Accuracy, precision, recall, and F1-score should be calculated using a separate test dataset rather than assumed.
@@ -250,10 +176,6 @@ Always consult a qualified healthcare professional for medical decisions.
 **Guniganti Kalyan**
 
 Aspiring Data Scientist | Machine Learning Enthusiast | AI Engineer
-
-GitHub: [Add Your GitHub Profile Link](https://github.com/)
-
-LinkedIn: [Add Your LinkedIn Profile Link](https://linkedin.com/)
 
 ---
 

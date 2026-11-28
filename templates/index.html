@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Heart Disease Prediction System</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+/* Header */
+
+.header {
+    background: linear-gradient(120deg, #991b35, #e74760);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* Form */
+
+.form-content {
+    padding: 35px;
+}
+
+.section-title {
+    color: #c02d48;
+    font-size: 19px;
+    margin: 30px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1dce1;
+}
+
+.section-title:first-child {
+    margin-top: 0;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input, select {
+    padding: 13px;
+    border: 1px solid #d5dce5;
+    border-radius: 7px;
+    background: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+    width: 100%;
+}
+
+input:focus, select:focus {
+    border-color: #d93653;
+    box-shadow: 0 0 0 3px rgba(217,54,83,0.10);
+}
+
+/* Button */
+
+.predict-btn {
+    width: 100%;
+    margin-top: 35px;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(120deg, #b91c3b, #e74760);
+    transition: 0.3s;
+}
+
+.predict-btn:hover {
+    background: #991b35;
+    transform: translateY(-2px);
+}
+
+/* Result */
+
+.result {
+    margin-top: 30px;
+    padding: 25px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.result h2 {
+    margin-bottom: 12px;
+}
+
+.result h1 {
+    font-size: 42px;
+    margin: 10px 0;
+}
+
+.result p {
+    font-size: 17px;
+    margin: 5px;
+    font-weight: 600;
+}
+
+.positive {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    color: #be123c;
+}
+
+.negative {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #047857;
+}
+
+/* Error */
+
+.error {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Footer */
+
+.footer {
+    background: #f8fafc;
+    text-align: center;
+    padding: 22px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Mobile responsive */
+
+@media(max-width: 650px) {
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-content {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+        <h1>❤️ Heart Disease Prediction</h1>
+        <p>Machine Learning Based Health Assessment System</p>
+    </div>
+
+    <div class="form-content">
+
+    <form action="/predict" method="POST">
+
+        <!-- Personal Information -->
+
+        <h3 class="section-title">
+            👤 Personal Information
+        </h3>
+
+        <div class="input-grid">
+
+            <div class="input-group">
+                <label>Age</label>
+                <input type="number" name="Age"
+                min="1" max="120" step="any"
+                placeholder="Enter age" required>
+            </div>
+
+            <div class="input-group">
+                <label>Gender</label>
+                <select name="Gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>BMI</label>
+                <input type="number" name="BMI"
+                step="any" min="0"
+                placeholder="Enter BMI" required>
+            </div>
+
+            <div class="input-group">
+                <label>Sleep Hours</label>
+                <input type="number" name="Sleep_Hours"
+                step="any" min="0" max="24"
+                placeholder="Hours per day" required>
+            </div>
+
+        </div>
+
+        <!-- Medical Information -->
+
+        <h3 class="section-title">
+            🩺 Medical Information
+        </h3>
+
+        <div class="input-grid">
+
+            <div class="input-group">
+                <label>Blood Pressure</label>
+                <input type="number" name="Blood_Pressure"
+                step="any" min="0"
+                placeholder="Enter blood pressure" required>
+            </div>
+
+            <div class="input-group">
+                <label>Cholesterol Level</label>
+                <input type="number" name="Cholesterol_Level"
+                step="any" min="0"
+                placeholder="Enter cholesterol" required>
+            </div>
+
+            <div class="input-group">
+                <label>Diabetes</label>
+                <select name="Diabetes" required>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Family Heart Disease</label>
+                <select name="Family_Heart_Disease" required>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>High Blood Pressure</label>
+                <select name="High_Blood_Pressure" required>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Smoking</label>
+                <select name="Smoking" required>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Low HDL Cholesterol</label>
+                <select name="Low_HDL_Cholesterol" required>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>High LDL Cholesterol</label>
+                <select name="High_LDL_Cholesterol" required>
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Lifestyle -->
+
+        <h3 class="section-title">
+            🏃 Lifestyle Information
+        </h3>
+
+        <div class="input-grid">
+
+            <div class="input-group">
+                <label>Exercise Habits</label>
+                <select name="Exercise_Habits" required>
+                    <option value="">Select</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Alcohol Consumption</label>
+                <select name="Alcohol_Consumption" required>
+                    <option value="">Select</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Stress Level</label>
+                <select name="Stress_Level" required>
+                    <option value="">Select</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Sugar Consumption</label>
+                <select name="Sugar_Consumption" required>
+                    <option value="">Select</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Blood Tests -->
+
+        <h3 class="section-title">
+            🧪 Blood Test Information
+        </h3>
+
+        <div class="input-grid">
+
+            <div class="input-group">
+                <label>Triglyceride Level</label>
+                <input type="number" name="Triglyceride_Level"
+                step="any" min="0"
+                placeholder="Enter level" required>
+            </div>
+
+            <div class="input-group">
+                <label>Fasting Blood Sugar</label>
+                <input type="number" name="Fasting_Blood_Sugar"
+                step="any" min="0"
+                placeholder="Enter level" required>
+            </div>
+
+            <div class="input-group">
+                <label>CRP Level</label>
+                <input type="number" name="CRP_Level"
+                step="any" min="0"
+                placeholder="Enter CRP level" required>
+            </div>
+
+            <div class="input-group">
+                <label>Homocysteine Level</label>
+                <input type="number" name="Homocysteine_Level"
+                step="any" min="0"
+                placeholder="Enter level" required>
+            </div>
+
+        </div>
+
+        <!-- Submit -->
+
+        <button type="submit" class="predict-btn">
+            ❤️ Predict Heart Disease
+        </button>
+
+    </form>
+
+    <!-- Prediction Result -->
+
+    {% if prediction is defined %}
+
+        {% if prediction == 1 %}
+
+        <div class="result positive">
+            <h2>Prediction Result</h2>
+            <h1>YES</h1>
+            <p>Heart Disease Predicted</p>
+            <p>Model Output: 1</p>
+        </div>
+
+        {% else %}
+
+        <div class="result negative">
+            <h2>Prediction Result</h2>
+            <h1>NO</h1>
+            <p>No Heart Disease Predicted</p>
+            <p>Model Output: 0</p>
+        </div>
+
+        {% endif %}
+
+    {% endif %}
+
+    <!-- Error Message -->
+
+    {% if error %}
+
+        <div class="error">
+            <strong>Error:</strong> {{ error }}
+        </div>
+
+    {% endif %}
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="footer">
+        <p>Heart Disease Prediction System | KNN Machine Learning Algorithm</p>
+        <p>Devopled by Guniganti Kalyan</p>
+    </div>
+
+</div>
+
+</body>
+</html>
